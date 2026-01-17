@@ -1,32 +1,3 @@
-const products = [
-    {
-        Image : "images/products/athletic-cotton-socks-6-pairs.jpg",
-        Name : " Black and Gray Athletic Cotton Socks - 6 Pairs",
-        rating : {
-            stars : 4.5,
-            count : 87,
-        },
-        PriceCents : 1090,
-    },
-    {
-        Image : "images/products/intermediate-composite-basketball.jpg",
-        Name : " Intermediate Size Basketball",
-        rating : {
-            stars : 4,
-            count : 127,
-        },
-        PriceCents : 2095,
-    },
-    {
-        Image : "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-        Name : " Adults Plain Cotton T-Shirt - 2 Pack",
-        rating : {
-            stars : 4.5,
-            count : 56,
-        },
-        PriceCents : 799,
-    }
-];
 
 let productHtml = '';
 
@@ -35,11 +6,11 @@ products.forEach((product) => {
     <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
-              src="${product.Image}">
+              src="${product.image}">
           </div>
 
           <div class="product-name limit-text-to-2-lines">
-            ${product.Name}
+            ${product.name}
           </div>
 
           <div class="product-rating-container">
@@ -51,7 +22,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${(product.PriceCents / 100).toFixed(2)}
+            $${(product.priceCents / 100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
@@ -74,9 +45,11 @@ products.forEach((product) => {
           <div class="added-to-cart">
             <img src="images/icons/checkmark.png">  
             Added
-          </div>
+        </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary
+          js-add-to-cart"
+            data-product-id="${product.id}">
             Add to Cart
           </button>
         </div>
@@ -84,3 +57,28 @@ products.forEach((product) => {
 });
 
 document.querySelector('.js-products-grid').innerHTML = productHtml;
+
+document.querySelectorAll('.js-add-to-cart')
+    .forEach((button) => {
+        button.addEventListener('click', () => {
+            const productId = button.dataset.productId;
+            let matchingItem;
+
+            cart.forEach((item) => {
+                if (item.productId === productId) {
+                    matchingItem = item;
+                }
+            });
+
+            if (matchingItem) {
+                matchingItem.quantity += 1;
+            } else {
+                cart.push({
+                    productId: productId,
+                    quantity: 1
+                });
+            }
+
+            console.log(cart);
+        });
+    });
