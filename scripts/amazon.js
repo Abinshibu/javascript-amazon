@@ -25,7 +25,7 @@ products.forEach((product) => {
             $${(product.priceCents / 100).toFixed(2)}
           </div>
 
-          <div class="product-quantity-container">
+          <div class="product-quantity-container js-quantity-selector-${product.id}">
             <select>
               <option selected value="1">1</option>
               <option value="2">2</option>
@@ -42,7 +42,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">  
             Added
         </div>
@@ -61,7 +61,7 @@ document.querySelector('.js-products-grid').innerHTML = productHtml;
 document.querySelectorAll('.js-add-to-cart')
     .forEach((button) => {
         button.addEventListener('click', () => {
-            const productId = button.dataset.productId;
+            const {productId} = button.dataset;
             let matchingItem;
 
             cart.forEach((item) => {
@@ -69,13 +69,28 @@ document.querySelectorAll('.js-add-to-cart')
                     matchingItem = item;
                 }
             });
+            const quantitySelector = document.querySelector(
+          `.js-quantity-selector-${productId}`
+            );
+            const quantity = quantitySelector ? Number(quantitySelector.querySelector('select').value) : 1;
+
+            const addedMessage = document.querySelector(
+          `.js-added-to-cart-${productId}`
+            );
+            if (addedMessage) {
+                addedMessage.classList.add('added-to-cart-visible');
+
+                setTimeout(() => {
+                    addedMessage.classList.remove('added-to-cart-visible');
+                }, 2000);
+            }
 
             if (matchingItem) {
-                matchingItem.quantity += 1;
+                matchingItem.quantity += quantity;
             } else {
                 cart.push({
-                    productId: productId,
-                    quantity: 1
+                    productId,
+                    quantity
                 });
             }
             let cartQuantity = 0;
@@ -83,5 +98,6 @@ document.querySelectorAll('.js-add-to-cart')
                 cartQuantity += item.quantity;
             });
             document.querySelector('.js-cart-quantity').innerText = cartQuantity;
+            console.log(cart);
         });
     });
