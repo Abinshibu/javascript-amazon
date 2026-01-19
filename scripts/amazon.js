@@ -1,5 +1,5 @@
-
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
+import {products} from '../data/products.js';
 let productHtml = '';
 
 products.forEach((product) => {
@@ -60,46 +60,23 @@ products.forEach((product) => {
 document.querySelector('.js-products-grid')
   .innerHTML = productHtml;
 
-document.querySelectorAll('.js-add-to-cart')
-    .forEach((button) => {
-        button.addEventListener('click', () => {
-            const {productId} = button.dataset;
-            let matchingItem;
 
-            cart.forEach((item) => {
-                if (item.productId === productId) {
-                    matchingItem = item;
-                }
-            });
-            const quantitySelector = document.querySelector(
-          `.js-quantity-selector-${productId}`
-            );
-            const quantity = quantitySelector ? Number(quantitySelector.querySelector('select').value) : 1;
 
-            const addedMessage = document.querySelector(
-          `.js-added-to-cart-${productId}`
-            );
-            if (addedMessage) {
-                addedMessage.classList.add('added-to-cart-visible');
-
-                setTimeout(() => {
-                    addedMessage.classList.remove('added-to-cart-visible');
-                }, 2000);
-            }
-
-            if (matchingItem) {
-                matchingItem.quantity += quantity;
-            } else {
-                cart.push({
-                    productId,
-                    quantity
-                });
-            }
-            let cartQuantity = 0;
+function updateCartQuantity() {
+  let cartQuantity = 0;
             cart.forEach((item) => {
                 cartQuantity += item.quantity;
             });
             document.querySelector('.js-cart-quantity').innerText = cartQuantity;
             console.log(cart);
+}
+
+document.querySelectorAll('.js-add-to-cart')
+    .forEach((button) => {
+        button.addEventListener('click', () => {
+            const {productId} = button.dataset;
+           addToCart(productId);
+            updateCartQuantity();
+            
         });
     });
