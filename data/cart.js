@@ -12,9 +12,9 @@ export const cart = [
 export function addToCart(productId) {
     let matchingItem;
 
-      cart.forEach((item) => {
-          if (item.productId === productId) {
-              matchingItem = item;
+      cart.forEach((cartItem) => {
+          if (cartItem.productId === productId) {
+              matchingItem = cartItem;
           }
       });
       const quantitySelector = document.querySelector(
