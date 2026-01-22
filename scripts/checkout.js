@@ -27,6 +27,18 @@ cart.forEach((cartItem) => {
     }
   });
 
+  const deliveryOptionsId = cartItem.deliveryOptionId;
+  let deliveryOption;
+  deliveryOptions.forEach((option) => {
+    if (option.id === cartItem.deliveryOptionId) {
+      deliveryOption = option;
+    }
+  });
+  const today = dayjs();
+  const deliveryDate = today.add(deliveryOption.deliveryDays, 'day');
+  const dateString = deliveryDate.format('dddd, MMMM D');
+
+  
   cartSummaryHTML += `
     <div class="cart-item-container
       js-cart-item-container-${matchingProduct.id}">
@@ -94,24 +106,10 @@ function deliveryOptionsHtml(matchingProduct, cartItem) {
               </div>
             </div>
           </div>
-          <div class="delivery-option">
-            <input type="radio"
-              class="delivery-option-input"
-              name="delivery-option-${matchingProduct.id}">
-            <div>
-              <div class="delivery-option-date">
-                Monday, June 13
-              </div>
-              <div class="delivery-option-price">
-                $9.99 - Shipping
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-});
+    `
+  });
+  return html;
+}
 
 document.querySelector('.js-order-summary')
   .innerHTML = cartSummaryHTML;
