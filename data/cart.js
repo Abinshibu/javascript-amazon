@@ -14,6 +14,8 @@ if (!cart) {
 
 function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
+  console.log('Saved cart to localStorage:', cart);
+  console.log('localStorage cart:', localStorage.getItem('cart'));
 }
 
 export function addToCart(productId) {
