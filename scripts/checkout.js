@@ -24,6 +24,11 @@ cart.forEach((cartItem) => {
     }
   });
 
+  if (!matchingProduct) {
+    console.log('No matching product for', productId);
+    return;
+  }
+
   cartSummaryHTML += `
     <div class="cart-item-container
       js-cart-item-container-${matchingProduct.id}">
@@ -103,6 +108,11 @@ cart.forEach((cartItem) => {
     </div>
   `;
 });
+
+console.log('Cart summary HTML length:', cartSummaryHTML.length);
+
+const orderSummaryElement = document.querySelector('.js-order-summary');
+console.log('Order summary element:', orderSummaryElement);
 
 document.querySelector('.js-order-summary')
   .innerHTML = cartSummaryHTML;
