@@ -18,7 +18,7 @@ products.forEach((product) => {
 
       <div class="product-rating-container">
         <img class="product-rating-stars"
-          src="images/ratings/rating-${product.rating.stars}.png">
+          src="images/ratings/rating-${product.rating.stars * 10}.png">
         <div class="product-rating-count link-primary">
           ${product.rating.count}
         </div>
@@ -28,7 +28,7 @@ products.forEach((product) => {
         $${formatCurrency(product.priceCents)}
       </div>
 
-      <div class="product-quantity-container js-quantity-selector-${product.id}">
+      <div class="product-quantity-container">
         <select>
           <option selected value="1">1</option>
           <option value="2">2</option>
@@ -45,7 +45,7 @@ products.forEach((product) => {
 
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart js-added-to-cart-${product.id}">
+      <div class="added-to-cart">
         <img src="images/icons/checkmark.png">
         Added
       </div>
