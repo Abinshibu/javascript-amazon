@@ -10,7 +10,7 @@ products.forEach((product) => {
       <div class="product-image-container">
         <img class="product-image"
           src="${product.image}">
-      </div>
+      </div>    
 
       <div class="product-name limit-text-to-2-lines">
         ${product.name}
@@ -42,6 +42,8 @@ products.forEach((product) => {
           <option value="10">10</option>
         </select>
       </div>
+
+      ${product.extraInfoHTML()}
 
       <div class="product-spacer"></div>
 
